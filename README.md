@@ -8,8 +8,6 @@ Convenient configuration, simple to use.
 
 Compatible with common PC browsers: Chrome, Firefox, Safari, Edge, QQ Browser, IE11.
 
-Mobile terminals are not supported.
-
 ## Keyboard shortcuts
 Ctrl + B: Bold
 Ctrl + I: Italic
