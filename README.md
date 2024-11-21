@@ -1,24 +1,35 @@
-## RichText
-[My widget description]
+## RichText2
+Lightweight Web Rich Text Editor, easy to configure and easy to use. wangEditor 5 based implementation.
 
 ## Features
-[feature highlights]
+Supports multiple languages. Currently, only en and cn are supported
 
-## Usage
-[step by step instructions]
+Convenient configuration, simple to use.
 
-## Demo project
-[link to sandbox]
+Compatible with common PC browsers: Chrome, Firefox, Safari, Edge, QQ Browser, IE11.
 
-## Issues, suggestions and feature requests
-[link to GitHub issues]
+Mobile terminals are not supported.
 
-## Development and contribution
+## Keyboard shortcuts
+Ctrl + B: Bold
+Ctrl + I: Italic
+Ctrl + U: Underline
+Ctrl + Z: Undo
+Ctrl + Y: Redo
+Ctrl + C: Copy
+Ctrl + V: Paste
 
-1. Install NPM package dependencies by using: `npm install`. If you use NPM v7.x.x, which can be checked by executing `npm -v`, execute: `npm install --legacy-peer-deps`.
-1. Run `npm start` to watch for code changes. On every change:
-    - the widget will be bundled;
-    - the bundle will be included in a `dist` folder in the root directory of the project;
-    - the bundle will be included in the `deployment` and `widgets` folder of the Mendix test project.
+## Dependencies
+Mendix 9.x
 
-[specify contribution]
+## Installation Configuration
+Place the widget in a data view, list view or template grid with a data source that has a string attribute and select the 'Value attribute' that contains the editable text.
+
+## Screenshots
+
+![alt text](images/1.png)
+![alt text](images/6.png)
+![alt text](images/5.png)
+![alt text](images/2.png)
+![alt text](images/3.png)
+![alt text](images/4.png)
