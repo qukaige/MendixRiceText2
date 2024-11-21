@@ -1,4 +1,4 @@
-import { createElement, useState, useEffect } from "react";
+import { createElement, useState, useEffect, useRef } from "react";
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig, IToolbarConfig, i18nChangeLanguage } from '@wangeditor/editor'
@@ -12,23 +12,20 @@ export interface MyRichTextProps {
 }
 
 const MyRichText: React.FC<MyRichTextProps> = (props) => {
-    if (props?.richTextVal?.status !== "available"){
-        return <div></div>;
-    }
-    console.info('porps=', props)
     // 切换语言 - 'en' 或者 'zh-CN'
-    const { lang, readOnly, height, richTextVal } = props;
-    i18nChangeLanguage(lang === 'en' ? lang : 'zh-CN');
+    i18nChangeLanguage(props.lang === 'en' ? props.lang : 'zh-CN');
+    const propsRef = useRef(props);
     // editor 实例
     const [editor, setEditor] = useState<IDomEditor | null>(null)   // TS 语法
     // const [editor, setEditor] = useState(null)                   // JS 语法
-
     // 编辑器内容
     const [html, setHtml] = useState('')
     // 模拟 ajax 请求，异步设置 html
     useEffect(() => {
-        setHtml(richTextVal?.value || "")
-    }, [richTextVal])
+        setHtml(props?.richTextVal?.value || "")
+        propsRef.current = props;
+    }, [props])
+
     // 工具栏配置
     const toolbarConfig: Partial<IToolbarConfig> = {}  // TS 语法
     // const toolbarConfig = { }                        // JS 语法
@@ -40,11 +37,23 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
     // 编辑器配置
     const editorConfig: Partial<IEditorConfig> = {    // TS 语法
         // const editorConfig = {                         // JS 语法
-        placeholder: lang !== 'en' ? '请输入内容...' : 'Please enter content...',
+        placeholder: props.lang !== 'en' ? '请输入内容...' : 'Please enter content...',
         // 只读模式
-        readOnly: readOnly
+        readOnly: props.readOnly
     }
 
+    // editorConfig.onFocus = (editor: IDomEditor) => {
+    //     // editor focused
+    //     console.log(1)
+    // }
+    // editorConfig.onBlur = (editor: IDomEditor) => {   // TS 语法
+    //     // editor blur
+    //     console.log(2)
+    // }
+    editorConfig.onChange = (editor: IDomEditor) => {   // TS 语法
+        const currentProps = propsRef.current;
+        currentProps.richTextVal?.status === "available" && currentProps.richTextVal.setValue(editor.getHtml())
+    }
     // 及时销毁 editor ，重要！
     useEffect(() => {
         return () => {
@@ -71,14 +80,10 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
                     defaultConfig={editorConfig}
                     value={html}
                     onCreated={setEditor}
-                    onChange={editor => richTextVal.setValue(editor.getHtml())}
                     mode="default"
-                    style={{ height: ((height && height > 100) ? height : 500) + 'px', overflowY: 'hidden' }}
+                    style={{ height: ((props.height && props.height > 100) ? props.height : 500) + 'px', overflowY: 'hidden' }}
                 />
             </div>
-            {/* <div style={{ marginTop: '15px' }}>
-        {html}
-      </div> */}
         </div>
     )
 }
