@@ -1,5 +1,5 @@
 import { createElement, useState, useEffect, useRef } from "react";
-import '@wangeditor/editor/dist/css/style.css' 
+import '@wangeditor/editor/dist/css/style.css'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig, IToolbarConfig, i18nChangeLanguage } from '@wangeditor/editor'
 import { EditableValue } from "mendix";
@@ -8,7 +8,8 @@ export interface MyRichTextProps {
     richTextVal: EditableValue<string>;
     lang: string;
     readOnly: boolean;
-    height: number | null;
+    uploadImageSize: number;
+    height: number;
 }
 
 const MyRichText: React.FC<MyRichTextProps> = (props) => {
@@ -16,7 +17,7 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
     i18nChangeLanguage(props.lang === 'en' ? props.lang : 'zh-CN');
     const propsRef = useRef(props);
     // editor 实例
-    const [editor, setEditor] = useState<IDomEditor | null>(null)   
+    const [editor, setEditor] = useState<IDomEditor | null>(null)
     // 编辑器内容
     const [html, setHtml] = useState('')
     // 模拟 ajax 请求，异步设置 html
@@ -25,16 +26,21 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
         propsRef.current = props;
     }, [props])
     // 工具栏配置
-    const toolbarConfig: Partial<IToolbarConfig> = {}  
+    const toolbarConfig: Partial<IToolbarConfig> = {}
     // 过滤菜单
     toolbarConfig.excludeKeys = [
-        "uploadVideo",
-        "uploadImage"
+        "uploadVideo"
     ]
     // 编辑器配置
-    const editorConfig: Partial<IEditorConfig> = {  
+    const editorConfig: Partial<IEditorConfig> = {
         placeholder: props.lang !== 'en' ? '请输入内容...' : 'Please enter content...',
-        readOnly: props.readOnly
+        readOnly: props.readOnly,
+        MENU_CONF: {
+            uploadImage: {
+                // 小于该值就插入 base64 格式（而不上传），默认为 0
+                base64LimitSize: props.uploadImageSize * 1024 // 5kb
+            }
+        }
     }
     // editorConfig.onFocus = (editor: IDomEditor) => {
     //     // editor focused
@@ -44,7 +50,7 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
     //     // editor blur
     //     console.log(2)
     // }
-    editorConfig.onChange = (editor: IDomEditor) => { 
+    editorConfig.onChange = (editor: IDomEditor) => {
         const currentProps = propsRef.current;
         currentProps.richTextVal?.status === "available" && currentProps.richTextVal.setValue(editor.getHtml())
     }

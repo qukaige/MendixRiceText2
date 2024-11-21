@@ -17,6 +17,7 @@ export interface RichTextContainerProps {
     lang: LangEnum;
     readOnly: boolean;
     height: number;
+    uploadImageSize: number;
 }
 
 export interface RichTextPreviewProps {
@@ -33,4 +34,5 @@ export interface RichTextPreviewProps {
     lang: LangEnum;
     readOnly: boolean;
     height: number | null;
+    uploadImageSize: number | null;
 }

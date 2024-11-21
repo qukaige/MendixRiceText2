@@ -16,7 +16,7 @@
                 </attributeTypes>
             </property>
             <property key="lang" type="enumeration" defaultValue="cn">
-                <caption>lang</caption>
+                <caption>Lang</caption>
                 <description>Select the richtext default language</description>
                 <enumerationValues>
                     <enumerationValue key="cn">zh-cn</enumerationValue>
@@ -24,12 +24,16 @@
                 </enumerationValues>
             </property>
             <property key="readOnly" type="boolean" defaultValue="false">
-                <caption>readOnly</caption>
+                <caption>ReadOnly</caption>
                 <description>If you don't want to edit, select Yes.</description>
             </property>
             <property key="height" type="integer" defaultValue="500">
-                <caption>height</caption>
+                <caption>Height</caption>
                 <description>Set richtext widget height</description>
+            </property>
+            <property key="uploadImageSize" type="integer" defaultValue="1000">
+                <caption>UploadImageSize</caption>
+                <description>Set richtext upload image size,  1000 indicates 1 MB.</description>
             </property>
         </propertyGroup>
     </properties>

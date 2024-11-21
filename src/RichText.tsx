@@ -11,6 +11,7 @@ export class RichText extends Component<RichTextContainerProps> {
         richTextVal={this.props.richTextVal}
         lang={this.props.lang}
         height={this.props.height}
+        uploadImageSize={this.props.uploadImageSize}
         readOnly={this.props.readOnly}
          />;
     }
