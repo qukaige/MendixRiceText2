@@ -1,5 +1,5 @@
 import { createElement, useState, useEffect, useRef } from "react";
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import '@wangeditor/editor/dist/css/style.css' 
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig, IToolbarConfig, i18nChangeLanguage } from '@wangeditor/editor'
 import { EditableValue } from "mendix";
@@ -16,8 +16,7 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
     i18nChangeLanguage(props.lang === 'en' ? props.lang : 'zh-CN');
     const propsRef = useRef(props);
     // editor 实例
-    const [editor, setEditor] = useState<IDomEditor | null>(null)   // TS 语法
-    // const [editor, setEditor] = useState(null)                   // JS 语法
+    const [editor, setEditor] = useState<IDomEditor | null>(null)   
     // 编辑器内容
     const [html, setHtml] = useState('')
     // 模拟 ajax 请求，异步设置 html
@@ -25,32 +24,27 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
         setHtml(props?.richTextVal?.value || "")
         propsRef.current = props;
     }, [props])
-
     // 工具栏配置
-    const toolbarConfig: Partial<IToolbarConfig> = {}  // TS 语法
-    // const toolbarConfig = { }                        // JS 语法
+    const toolbarConfig: Partial<IToolbarConfig> = {}  
     // 过滤菜单
     toolbarConfig.excludeKeys = [
         "uploadVideo",
         "uploadImage"
     ]
     // 编辑器配置
-    const editorConfig: Partial<IEditorConfig> = {    // TS 语法
-        // const editorConfig = {                         // JS 语法
+    const editorConfig: Partial<IEditorConfig> = {  
         placeholder: props.lang !== 'en' ? '请输入内容...' : 'Please enter content...',
-        // 只读模式
         readOnly: props.readOnly
     }
-
     // editorConfig.onFocus = (editor: IDomEditor) => {
     //     // editor focused
     //     console.log(1)
     // }
-    // editorConfig.onBlur = (editor: IDomEditor) => {   // TS 语法
+    // editorConfig.onBlur = (editor: IDomEditor) => {  
     //     // editor blur
     //     console.log(2)
     // }
-    editorConfig.onChange = (editor: IDomEditor) => {   // TS 语法
+    editorConfig.onChange = (editor: IDomEditor) => { 
         const currentProps = propsRef.current;
         currentProps.richTextVal?.status === "available" && currentProps.richTextVal.setValue(editor.getHtml())
     }
@@ -62,7 +56,6 @@ const MyRichText: React.FC<MyRichTextProps> = (props) => {
             setEditor(null)
         }
     }, [editor])
-
     // const toolbar = DomEditor.getToolbar(editor as IDomEditor)
     // const curToolbarConfig = toolbar?.getConfig()
     // console.log('tollbarkeys=', curToolbarConfig?.toolbarKeys) // 当前菜单排序和分组
